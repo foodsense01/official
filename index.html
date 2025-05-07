@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>FoodSense - Nurturing Healthier Lifestyles</title>
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #FFFFFF;
+    color: #333333;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  a {
+    text-decoration: none;
+    color: #4CAF50;
+  }
+  a:hover, a:focus {
+    text-decoration: underline;
+  }
+  header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 15px;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  nav button {
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 25px;
+    padding: 8px 20px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  nav button.active,
+  nav button:hover, nav button:focus {
+    background-color: #ffffff;
+    color: #4CAF50;
+    outline: none;
+  }
+  main {
+    flex-grow: 1;
+  }
+  footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 15px 10px;
+    font-size: 14px;
+  }
+  /* Banner */
+  .banner {
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80') center center/cover no-repeat;
+    height: 200px;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+  }
+  .banner h1 {
+    font-size: 1.8rem;
+    background: rgba(76, 175, 80, 0.7);
+    padding: 12px 20px;
+    border-radius: 8px;
+  }
+  /* Sections hidden by default */
+  section {
+    display: none;
+    padding-top: 15px;
+  }
+  section.active {
+    display: block;
+  }
+  h2 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+  }
+  p, li {
+    line-height: 1.5;
+    margin-bottom: 1em;
+  }
+  ul {
+    margin-left: 20px;
+    margin-bottom: 1em;
+  }
+  /* Buttons */
+  .btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background-color: #388E3C;
+  }
+  /* Form styles */
+  form {
+    margin-top: 15px;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  input[type=text], input[type=email], textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #4CAF50;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    resize: vertical;
+  }
+  textarea {
+    height: 100px;
+  }
+  /* Responsive image & video */
+  img.responsive, video.responsive {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 15px 0;
+  }
+  /* List styling for quotes */
+  .quotes {
+    list-style: none;
+    padding-left: 0;
+  }
+  .quotes li {
+    background: #E8F5E9;
+    border-left: 6px solid #4CAF50;
+    margin: 10px 0;
+    padding: 12px 15px;
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+  /* Contact info */
+  .contact-info {
+    margin-top: 20px;
+    font-size: 0.95rem;
+  }
+  /* Credits styling */
+  .credits-person {
+    background: #E8F5E9;
+    padding: 10px 15px;
+    margin: 6px 0;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  /* Mobile responsiveness */
+  @media (max-width: 600px) {
+    .banner {
+      height: 150px;
+    }
+    nav {
+      gap: 10px;
+    }
+    nav button {
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+    .container {
+      padding: 10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container" style="display:flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+    <h1 style="font-weight:bold; font-size:1.5rem; cursor: default;">FoodSense</h1>
+    <nav aria-label="Primary Navigation">
+      <button class="nav-btn active" data-target="home" aria-current="page">Home</button>
+      <button class="nav-btn" data-target="motivation">Motivation</button>
+      <button class="nav-btn" data-target="seminars">Seminars</button>
+      <button class="nav-btn" data-target="recipes">Recipes</button>
+      <button class="nav-btn" data-target="contact">Contact</button>
+      <button class="nav-btn" data-target="credits">Credits</button>
+    </nav>
+  </div>
+</header>
+
+<main class="container" aria-live="polite" tabindex="0">
+  <section id="home" class="active" aria-hidden="false" tabindex="0">
+    <div class="banner" role="img" aria-label="Fresh colorful fruits and vegetables">
+      <h1>Welcome to Food Sense - Nurturing Healthier Lifestyles</h1>
+    </div>
+    <article>
+      <p>FoodSense is a <strong>non-profit organization</strong> committed to nurturing healthier lifestyles by encouraging <strong>small, sustainable changes</strong> in everyday eating habits. Guided by the belief that wellness begins with the food we consume, FoodSense empowers individuals to make informed dietary choices—like swapping out processed foods for fresh, whole ingredients, increasing their intake of fruits and vegetables, and practicing mindful eating.</p>
+      <p>The organization’s mission is rooted in <strong>accessibility and simplicity</strong>, making healthy living achievable for everyone, regardless of age or background. Through community engagement and education, FoodSense is creating a ripple effect of positive change—one plate, one person, and one school at a time.</p>
+      <p>Join us in transforming lives by embracing the power of small changes. Whether you want to learn healthy recipes, attend engaging seminars, or find motivation to lead a better lifestyle, FoodSense is here to support you every step of the way.</p>
+      <button class="btn-primary" onclick="alert('Thank you for your interest! Stay tuned for updates on how to join.')">Join Us in Making a Change</button>
+    </article>
+    <video class="responsive" controls poster="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80" aria-label="Introductory healthy lifestyle video">
+      <source src="https://interactive-examples.mdn.mozilla.net/media/examples/flower.webm" type="video/webm" />
+      Sorry, your browser doesn't support embedded videos.
+    </video>
+  </section>
+
+  <section id="motivation" aria-hidden="true" tabindex="-1" aria-label="Motivational quotes">
+    <h2>Motivational Quotes</h2>
+    <ul class="quotes" aria-live="polite">
+      <li>"Let food be thy medicine and medicine be thy food." – Hippocrates</li>
+      <li>"Small changes can lead to big results."</li>
+      <li>"You are what you eat, so don’t be fast, cheap, easy, or fake."</li>
+      <li>"Healthy eating is a way of life, so it's important to establish habits that are simple, realistic, and ultimately enjoyable."</li>
+      <li>"The doctor of the future will no longer treat the human frame with drugs, but rather will cure and prevent disease with nutrition."</li>
+      <li>"Eat to live, don’t live to eat."</li>
+    </ul>
+    <img class="responsive" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80" alt="Fresh fruits and vegetables in a basket, representing healthy food and lifestyle" />
+    <p>Let these words inspire you to embrace a balanced and joyful relationship with food. Motivation is the first step toward change; let FoodSense be your partner in this wellness journey.</p>
+    <video class="responsive" controls poster="https://images.unsplash.com/photo-1535914254981-b5012eebbd15?auto=format&fit=crop&w=900&q=80" aria-label="Motivational video for healthy lifestyle">
+      <source src="https://interactive-examples.mdn.mozilla.net/media/examples/flower.webm" type="video/webm" />
+      Your browser does not support the video tag.
+    </video>
+  </section>
+
+  <section id="seminars" aria-hidden="true" tabindex="-1">
+    <h2>Upcoming Seminars</h2>
+    <p>FoodSense actively conducts seminars and interactive workshops in schools to educate young minds about nutrition, the importance of balanced meals, and the long-term benefits of healthy habits.</p>
+    <p>Seminars have been held at the following prestigious schools in Vijayawada:</p>
+    <ul>
+      <li>Delhi Public School, Vijayawada</li>
+      <li>Shamrock International, Vijayawada</li>
+      <li>VP Siddhartha</li>
+      <li>St. John's</li>
+      <li>Scotspine, Vijayawada</li>
+    </ul>
+    <ul>
+      <li>
+        <strong>Food Fest</strong><br />
+        <em>Date:</em> Not decided yet<br />
+        <em>Location:</em> Shamrock International School<br />
+        <em>Description:</em> Importance of eating healthy food, learning how to identify nutritious options, and fun interactive activities for kids.
+      </li>
+      <li>
+        <strong>Mindful Eating Workshop</strong><br />
+        <em>Date:</em> Yet to be decided<br />
+        <em>Location:</em> Delhi Public School, Vijayawada<br />
+        <em>Description:</em> Learn how to practice mindful eating and make healthier food choices to improve overall wellbeing.
+      </li>
+    </ul>
+    <p>These seminars aim to build awareness, inspire change, and empower families and communities through knowledge and action.</p>
+  </section>
+
+  <section id="recipes" aria-hidden="true" tabindex="-1">
+    <h2>Healthy Indian Recipes</h2>
+    <p>Explore our collection of healthy Indian recipes that are not only delicious but also easy to prepare. These recipes incorporate wholesome ingredients and promote a balanced diet without compromising taste.</p>
+    <article>
+      <h3>Quinoa Upma</h3>
+      <p><strong>Ingredients:</strong> Quinoa, mixed vegetables, mustard seeds, curry leaves, green chilies, ginger, and spices.</p>
+      <p><strong>Instructions:</strong></p>
+      <ol>
+        <li>Rinse quinoa thoroughly and cook until fluffy.</li>
+        <li>In a pan, heat oil. Add mustard seeds, curry leaves, chopped green chilies, and ginger.</li>
+        <li>Add mixed vegetables and sauté until tender.</li>
+        <li>Mix cooked quinoa into the vegetables. Stir well and serve hot.</li>
+      </ol>
+    </article>
+    <article>
+      <h3>Chickpea Salad</h3>
+      <p><strong>Ingredients:</strong> Boiled chickpeas, cucumber, tomatoes, onions, lemon juice, coriander, and spices.</p>
+      <p><strong>Instructions:</strong></p>
+      <ol>
+        <li>Boil chickpeas until tender.</li>
+        <li>Chop cucumber, tomatoes, and onions finely.</li>
+        <li>Mix chickpeas with chopped veggies and lemon juice.</li>
+        <li>Season with salt, pepper, and garnish with fresh coriander.</li>
+        <li>Serve chilled or fresh.</li>
+      </ol>
+    </article>
+    <article>
+      <h3>Spinach Dal</h3>
+      <p><strong>Ingredients:</strong> Toor dal (lentils), fresh spinach, onions, garlic, green chilies, turmeric, and spices.</p>
+      <p><strong>Instructions:</strong></p>
+      <ol>
+        <li>Cook lentils until soft and mushy.</li>
+        <li>Sauté onions, garlic, and green chilies in a pan.</li>
+        <li>Add chopped spinach and cook until wilted.</li>
+        <li>Add sautéed mixture to the cooked dal, season with turmeric, salt, and pepper.</li>
+        <li>Simmer for 5 minutes. Serve with brown rice or whole wheat roti.</li>
+      </ol>
+    </article>
+    <p>These recipes are perfect examples of how traditional Indian cuisine can be adapted to promote a healthier lifestyle without sacrificing flavor or cultural roots.</p>
+  </section>
+
+  <section id="contact" aria-hidden="true" tabindex="-1">
+    <h2>Get in Touch</h2>
+    <p>We would love to hear from you! Whether you have questions, suggestions, want to volunteer, or get involved, please fill out the form below or reach us through our contact information.</p>
+    <form id="contact-form" aria-label="Contact form">
+      <label for="name">Full Name *</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
+      <label for="email">Email Address *</label>
+      <input type="email" id="email" name="email" placeholder="your.email@example.com" required />
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" name="phone" placeholder="+91 12345 67890" pattern="[\d\s\+\-]+" title="Please enter a valid phone number" />
+      <label for="city">City</label>
+      <input type="text" id="city" name="city" placeholder="Your city" />
+      <label for="message">Message *</label>
+      <textarea id="message" name="message" placeholder="Write your message here" required></textarea>
+      <button type="submit" class="btn-primary">Send Message</button>
+    </form>
+    <div class="contact-info" aria-live="polite" id="form-response" style="margin-top:10px;"></div>
+    <h3>Our Contact Details</h3>
+    <p>Email: <a href="mailto:foodsense01@gmail.com">foodsense01@gmail.com</a></p>
+    <p>Phone: <a href="tel:+919390039829">+91 93900 39829</a></p>
+    <p>Address: Vijayawada, Andhra Pradesh, India</p>
+    <p>Instagram: <a href="https://instagram.com/foodsense.official" target="_blank" rel="noopener">@foodsense.official</a></p>
+  </section>
+
+  <section id="credits" aria-hidden="true" tabindex="-1">
+    <h2>Credits</h2>
+    <p>This website was built with dedication and passion by two amazing contributors who share our commitment to promoting healthier lives through better food choices.</p>
+    <div class="credits-person" tabindex="0">Hasitha Chowdary Nalajala</div>
+    <div class="credits-person" tabindex="0">Sara Prasad</div>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  <p>&copy; 2024 FoodSense - All rights reserved.</p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const navButtons = document.querySelectorAll('nav .nav-btn');
+    const sections = document.querySelectorAll('main > section');
+
+    function setActiveSection(targetId) {
+      sections.forEach(sec => {
+        if (sec.id === targetId) {
+          sec.classList.add('active');
+          sec.setAttribute('aria-hidden', 'false');
+          sec.tabIndex = 0;
+          sec.focus();
+        } else {
+          sec.classList.remove('active');
+          sec.setAttribute('aria-hidden', 'true');
+          sec.tabIndex = -1;
+        }
+      });
+      navButtons.forEach(btn => {
+        if (btn.dataset.target === targetId) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-current', 'page');
+        } else {
+          btn.classList.remove('active');
+          btn.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        setActiveSection(btn.dataset.target);
+      });
+    });
+
+    // Initialize with home visible
+    setActiveSection('home');
+
+    // Contact form submit handler
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const responseDiv = document.getElementById('form-response');
+      responseDiv.textContent = '';
+      responseDiv.textContent = 'Thank you, ' + this.name.value + '! Your message has been sent successfully. We will get back to you shortly.';
+      this.reset();
+    });
+  });
+</script>
+
+</body>
+</html>
+</content>
+</create_file>
